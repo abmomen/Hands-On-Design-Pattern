@@ -1,3 +1,4 @@
+//Types of Pizza
 enum PizzaType {
     case cheesePizza, greekPizza, pepperoni
 }
@@ -7,7 +8,7 @@ protocol Pizza {
     func cut()
     func box()
 }
-
+//Concrete Pizzas:-----------------------------
 class CheesePizza: Pizza {
     func prepare() {
         print("Preparing CheesePizza pizza")
@@ -61,7 +62,9 @@ class PepperoniPizza: Pizza {
         print("Packaging PepperoniPizza pizza")
     }
 }
+//Pizza End:------------------------------------
 
+//Pizza Factory: -------------------------------
 protocol PizzaFactory {
     func makePizza(type: PizzaType) -> Pizza 
 }
@@ -78,6 +81,7 @@ class MainFactory: PizzaFactory {
         } 
     }
 }
+//End of factory:-------------------------------
 
 let factory = MainFactory()
 let pizza = factory.makePizza(type: .cheesePizza)
