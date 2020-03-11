@@ -1,2 +1,2 @@
 # Hands-On-Design-Pattern
-This repository is going to discuss about some popular design patterns
+## In this repository i am going to discuss about design patterns, for example i will use swift programming language.
