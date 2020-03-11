@@ -83,6 +83,7 @@ class MainFactory: PizzaFactory {
 }
 //End of factory:-------------------------------
 
+//Now use that factory to any place where you need a pizza to make.
 let factory = MainFactory()
 let pizza = factory.makePizza(type: .cheesePizza)
 pizza.prepare()
