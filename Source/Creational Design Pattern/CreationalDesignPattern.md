@@ -51,7 +51,7 @@ Now in ```orderPizza(type: PizzaType)``` method we just do the following.
 ```swift
 func orderPizza(type: PizzaType) -> Pizza{
     let factory = MainFactory()
-    let pizza = factory.makePizza(.cheesePizza)
+    let pizza = factory.makePizza(type)
     pizza.prepare()
     pizza.bake()
     pizza.cut()
