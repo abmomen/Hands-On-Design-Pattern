@@ -84,11 +84,19 @@ class MainFactory: PizzaFactory {
 //End of factory:-------------------------------
 
 //Now use that factory to any place where you need a pizza to make.
-let factory = MainFactory()
-let pizza = factory.makePizza(type: .cheesePizza)
-pizza.prepare()
-pizza.bake()
-pizza.cut()
-pizza.box()
+func orderPizza(type: PizzaType) -> Pizza{
+    let factory = MainFactory()
+    let pizza = factory.makePizza(type: type)
+    pizza.prepare()
+    pizza.bake()
+    pizza.cut()
+    pizza.box()
+    return pizza
+}
+print("\nI want Cheese Pizza:")
+let cheesePizza = orderPizza(type: .cheesePizza)
+print("Here is your Pizza: \(cheesePizza)")
 
-print("Your Pizza is ready to be delivered")
+print("\nI want Greek Pizza:")
+let greekPizza = orderPizza(type: .greekPizza)
+print("Here is your Pizza: \(greekPizza)")
