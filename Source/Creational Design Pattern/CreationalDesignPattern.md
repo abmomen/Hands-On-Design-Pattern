@@ -27,3 +27,23 @@ func orderPizza(type: PizzaType) -> Pizza {
 #### This is perfectly fine until you face a change in pizza type. and what if your boss have opened a new branch of pizza shop, then what you need to do?. You have to add another case to your orderPizza method and this same change mush me applied to every branch of pizza shop.
 
 #### To resolve this issue factory method comes in, it separates the logical part of the pizza creation to somewhere else and we call it ```PizzaFactory``` which does only one task it just creates pizza depending on pizza catagory. Now whoever needs the pizza he just asks to Pizza factory for a Pizza and gets the pizza.
+
+### Our Pizza Factory Looks Like Bellow:
+```swift
+protocol PizzaFactory() {
+    func makePizza(type: PizzaType) -> Pizza
+}
+
+class MainFactory: PizzaFactory {
+    func makePizza(type: PizzaType) -> Pizza {
+       switch type {
+        case .cheesePizza:
+            return CheesePizza()
+        case .greekPizza:
+            return GreekPizza()
+        case .pepperoni:
+            return PepperoniPizza()
+        } 
+    }
+}
+```
