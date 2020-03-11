@@ -3,4 +3,4 @@
 
 ## Index
 * Creational Design Pattern
-    * [Factory Method Design Pattern] (www.google.com)
+    * [Factory Method Design Pattern](https://www.google.com)
