@@ -54,7 +54,7 @@ protocol FurnitureFactory {
 }
 
 class VictorianFurnitureFactory: FurnitureFactory {
-    func makeChair() -> Sofa{
+    func makeChair() -> Chair{
         return VictorianChair()
     }
     func makeSofa() -> Sofa {
@@ -63,7 +63,7 @@ class VictorianFurnitureFactory: FurnitureFactory {
 }
 
 class ModernFurnitureFactory: FurnitureFactory {
-    func makeChair() -> Sofa{
+    func makeChair() -> Chair{
         return ModernChair()
     }
     func makeSofa() -> Sofa {
@@ -71,29 +71,32 @@ class ModernFurnitureFactory: FurnitureFactory {
     }
 }
 
-class Client{
-    let furnitureType: FurnitureType
+class FurnitureShop {
     var factory: FurnitureFactory
     init(furnitureType: FurnitureType) {
-        self.factory = factory
+        switch furnitureType {
+            case .victorian:
+                self.factory = VictorianFurnitureFactory()
+            case .modern:
+                self.factory = ModernFurnitureFactory()
+        }
     }
-    switch furnitureType {
-    case .victorian:
-        factory = VictorianFurnitureFactory()
-    case .modern:
-        factory = ModernFurnitureFactory()
+    
+    func getChair() -> Chair{
+        return factory.makeChair()
     }
-
-    func getChair() -> Chair {
-        print("Here is your Chair: \(factory.makeChair())")
-    }
-    func getSofa() {
-        print("Here is your Sofa: \(factory.makeSofa())")
+    func getSofa() -> Sofa{
+        return factory.makeSofa()
     }
 }
 
 //Test: 
-let client = Client(furnitureType: .victorian)
-print(client.getChair())
-print(client.getSofa())
+let furnitureShop = FurnitureShop(furnitureType: .victorian)
+let chair = furnitureShop.getChair()
+chair.hasLegs()
+chair.sitOn()
+
+let sofa = furnitureShop.getSofa()
+sofa.hasLegs()
+sofa.layOn()
 
