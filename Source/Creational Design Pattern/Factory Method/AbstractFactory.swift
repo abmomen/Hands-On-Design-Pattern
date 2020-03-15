@@ -1,132 +1,99 @@
-//lets we have some devices
-enum DeviceType {
-    case HP, Dell, Samsung, OnePlus
-}
-//Abstract Device
-protocol Device {
-    func getConfig()
+protocol Chair {
+    func hasLegs()
+    func sitOn()
 }
 
-//MARK: Concrete devices...............................................................Start
-class HP: Device {
-    let ram: String
-    let processor: String
-    let gpu: String
-
-    init(ram: String, processor: String, gpu: String) {
-        self.ram = ram
-        self.processor = processor
-        self.gpu = gpu
+class VictorianChair: Chair {
+    func hasLegs() {
+        print("Victorian chairs has four legs")
     }
-
-    func getConfig() {
-        print("HP Laptop Config: RAM: \(ram) Processor: \(processor) GPU: \(gpu)")
+    func sitOn() {
+        print("You can sit on Victorian chair")
     }
 }
 
-class Dell: Device {
-    let ram: String
-    let processor: String
-    let gpu: String
-
-    init(ram: String, processor: String, gpu: String) {
-        self.ram = ram
-        self.processor = processor
-        self.gpu = gpu
+class ModernChair: Chair {
+    func hasLegs() {
+        print("Modern chairs has four legs")
     }
-
-    func getConfig() {
-        print("Dell Laptop Config: RAM: \(ram) Processor: \(processor) GPU: \(gpu)")
+    func sitOn() {
+        print("You can sit on Modern chair")
     }
 }
 
-class Samsung: Device {
-    let ram: String
-    let processor: String
 
-    init(ram: String, processor: String) {
-        self.ram = ram
-        self.processor = processor
-    }
-
-    func getConfig() {
-        print("Samsung Mobile Config: RAM: \(ram) Processor: \(processor)")
-    }
+protocol Sofa {
+    func hasLegs()
+    func layOn()
 }
 
-class OnePlus: Device {
-    let ram: String
-    let processor: String
-
-    init(ram: String, processor: String) {
-        self.ram = ram
-        self.processor = processor
+class VictorianSofa: Sofa {
+    func hasLegs() {
+        print("Victorian sofas have 6 legs")
     }
-
-    func getConfig() {
-        print("OnePlus Mobile Config: RAM: \(ram) Processor: \(processor)")
+    func layOn() {
+        print("Victorian sofas are comfortable to lay on")
     }
 }
 
-//Concrete devices...............................................................End
-
-//MARK: Abstract Factory
-enum FactoryTypes {
-    case ComputerFactory, MobileFactory
+class ModernSofa: Sofa {
+  func hasLegs() {
+        print("Victorian sofas have 4 legs")
+    }
+    func layOn() {
+        print("Victorian sofas are more comfortable to lay on than victorian")
+    }  
 }
-protocol DeviceFactory {
-    func createDevice(deviceType: DeviceType) -> Device?
+
+enum FurnitureType {
+    case victorian, modern
+}
+protocol FurnitureFactory {
+    func makeChair() -> Chair
+    func makeSofa() -> Sofa
 }
 
-//MARK: Concrete Factories......................................................Start
-class ComputerFactory: DeviceFactory {
-    func createDevice(deviceType: DeviceType) -> Device? {
-        switch deviceType {
-        case .HP:
-            return HP(ram: "8 GB", processor: "core i7", gpu: "4 GB")
-        case .Dell:
-            return Dell(ram: "16 GB", processor: "core i5", gpu: "2 GB")
-        default: 
-            return nil
-        }
-        
+class VictorianFurnitureFactory: FurnitureFactory {
+    func makeChair() -> Sofa{
+        return VictorianChair()
+    }
+    func makeSofa() -> Sofa {
+        return VictorianSofa()
     }
 }
 
-class MobileFactory: DeviceFactory {
-    func createDevice(deviceType: DeviceType) -> Device? {
-        switch deviceType {
-        case .OnePlus:
-            return OnePlus(ram: "4 GB", processor: "Qualcom Snap Dragon 865")
-        case .Samsung:
-            return Samsung(ram: "3 GB", processor: "Exynos 9611")
-        default:
-            return nil
-        }
+class ModernFurnitureFactory: FurnitureFactory {
+    func makeChair() -> Sofa{
+        return ModernChair()
     }
-}
-//Factories.......................................................................End
-
-// MARK: Factory Generator
-class FactoryGeneratory {
-    static func getFactory(factoryType: FactoryTypes) -> DeviceFactory {
-        switch factoryType {
-        case .ComputerFactory:
-            return ComputerFactory()
-        case .MobileFactory:
-            return MobileFactory()
-        }
+    func makeSofa() -> Sofa {
+        return ModernSofa()
     }
 }
 
-//MARK: Test Client: 
-let factory = FactoryGeneratory.getFactory(factoryType: .MobileFactory)
-if let samsung = factory.createDevice(deviceType: .Samsung) {
-    samsung.getConfig()
+class Client{
+    let furnitureType: FurnitureType
+    var factory: FurnitureFactory
+    init(furnitureType: FurnitureType) {
+        self.factory = factory
+    }
+    switch furnitureType {
+    case .victorian:
+        factory = VictorianFurnitureFactory()
+    case .modern:
+        factory = ModernFurnitureFactory()
+    }
+
+    func getChair() -> Chair {
+        print("Here is your Chair: \(factory.makeChair())")
+    }
+    func getSofa() {
+        print("Here is your Sofa: \(factory.makeSofa())")
+    }
 }
 
-if let onePlus = factory.createDevice(deviceType: .OnePlus) {
-    onePlus.getConfig()
-}
-
+//Test: 
+let client = Client(furnitureType: .victorian)
+print(client.getChair())
+print(client.getSofa())
 
