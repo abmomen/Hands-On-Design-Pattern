@@ -61,3 +61,5 @@ func orderPizza(type: PizzaType) -> Pizza{
 ```
 Thats it where ever you need a pizza just ask to pizza factory you will get it. and if your boss brings more pizza item to the menu you just need to change in only one place.
 #### [To see the full implementation please have a look at it](https://github.com/abmomin/Hands-On-Design-Pattern/blob/master/Source/Creational%20Design%20Pattern/Factory%20Method/FactoryMethod.swift)
+
+# 2. Abstract Factory Method.
