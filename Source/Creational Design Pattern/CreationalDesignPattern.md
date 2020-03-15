@@ -30,10 +30,6 @@ To resolve this issue factory method comes in, it separates the logical part of 
 
 ### Our Pizza Factory Looks Like Bellow:
 ```swift
-protocol PizzaFactory() {
-    func makePizza(type: PizzaType) -> Pizza
-}
-
 class MainFactory: PizzaFactory {
     func makePizza(type: PizzaType) -> Pizza {
        switch type {
@@ -63,3 +59,5 @@ Thats it where ever you need a pizza just ask to pizza factory you will get it. 
 #### [To see the full implementation please have a look at it](https://github.com/abmomin/Hands-On-Design-Pattern/blob/master/Source/Creational%20Design%20Pattern/Factory%20Method/FactoryMethod.swift)
 
 # 2. Abstract Factory Method.
+
+### Abstract Factory is a creational design pattern that lets you produce families of related objects without specifying their concrete classes.
