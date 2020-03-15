@@ -1,8 +1,14 @@
+//MARK: Abstract Furnitures (or releated objects)
 protocol Chair {
     func hasLegs()
     func sitOn()
 }
 
+protocol Sofa {
+    func hasLegs()
+    func layOn()
+}
+//MARK: Concrete Furnitures....................................
 class VictorianChair: Chair {
     func hasLegs() {
         print("Victorian chairs has four legs")
@@ -19,12 +25,6 @@ class ModernChair: Chair {
     func sitOn() {
         print("You can sit on Modern chair")
     }
-}
-
-
-protocol Sofa {
-    func hasLegs()
-    func layOn()
 }
 
 class VictorianSofa: Sofa {
@@ -44,15 +44,16 @@ class ModernSofa: Sofa {
         print("Victorian sofas are more comfortable to lay on than victorian")
     }  
 }
-
+//End..................................................................
 enum FurnitureType {
     case victorian, modern
 }
+//Abstract Factory
 protocol FurnitureFactory {
     func makeChair() -> Chair
     func makeSofa() -> Sofa
 }
-
+//Concrete Factory
 class VictorianFurnitureFactory: FurnitureFactory {
     func makeChair() -> Chair{
         return VictorianChair()
@@ -70,7 +71,7 @@ class ModernFurnitureFactory: FurnitureFactory {
         return ModernSofa()
     }
 }
-
+//........................................................................
 class FurnitureShop {
     var factory: FurnitureFactory
     init(furnitureType: FurnitureType) {
