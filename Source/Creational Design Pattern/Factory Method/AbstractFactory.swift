@@ -119,8 +119,6 @@ class FactoryGeneratory {
     }
 }
 
-
-
 //MARK: Test Client: 
 let factory = FactoryGeneratory.getFactory(factoryType: .MobileFactory)
 if let samsung = factory.createDevice(deviceType: .Samsung) {

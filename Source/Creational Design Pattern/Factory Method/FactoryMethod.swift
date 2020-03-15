@@ -9,90 +9,176 @@ protocol Pizza {
     func box()
 }
 //Concrete Pizzas:-----------------------------
-class CheesePizza: Pizza {
+//MARK: Local Pizzas 
+class LocalCheesePizza: Pizza {
     func prepare() {
-        print("Preparing CheesePizza pizza")
+        print("Preparing LocalCheesePizza pizza")
     }
 
     func bake() {
-        print("Baking CheesePizza pizza")
+        print("Baking LocalCheesePizza pizza")
     }
 
     func cut() {
-        print("Cutting CheesePizza pizza")
+        print("Cutting LocalCheesePizza pizza")
     }
 
     func box() {
-        print("Packaging CheesePizza pizza")
+        print("Packaging LocalCheesePizza pizza")
     }
 }
 
-class GreekPizza: Pizza {
+class LocalGreekPizza: Pizza {
    func prepare() {
-        print("Preparing greekPizza pizza")
+        print("Preparing LocalgreekPizza pizza")
     }
 
     func bake() {
-        print("Baking greekPizza pizza")
+        print("Baking LocalgreekPizza pizza")
     }
 
     func cut() {
-        print("Cutting greekPizza pizza")
+        print("Cutting LocalgreekPizza pizza")
     }
 
     func box() {
-        print("Packaging greekPizza pizza")
+        print("Packaging LocalgreekPizza pizza")
     } 
 }
 
-class PepperoniPizza: Pizza {
+class LocalPepperoniPizza: Pizza {
     func prepare() {
-        print("Preparing PepperoniPizza pizza")
+        print("Preparing LocalPepperoniPizza pizza")
     }
 
     func bake() {
-        print("Baking PepperoniPizza pizza")
+        print("Baking LocalPepperoniPizza pizza")
     }
 
     func cut() {
-        print("Cutting PepperoniPizza pizza")
+        print("Cutting LocalPepperoniPizza pizza")
     }
 
     func box() {
-        print("Packaging PepperoniPizza pizza")
+        print("Packaging LocalPepperoniPizza pizza")
+    }
+}
+
+//MARK: Remote Pizzas
+
+class RemoteCheesePizza: Pizza {
+    func prepare() {
+        print("Preparing RemoteCheesePizza pizza")
+    }
+
+    func bake() {
+        print("Baking RemoteCheesePizza pizza")
+    }
+
+    func cut() {
+        print("Cutting RemoteCheesePizza pizza")
+    }
+
+    func box() {
+        print("Packaging RemoteCheesePizza pizza")
+    }
+}
+
+class RemoteGreekPizza: Pizza {
+   func prepare() {
+        print("Preparing RemotegreekPizza pizza")
+    }
+
+    func bake() {
+        print("Baking RemotegreekPizza pizza")
+    }
+
+    func cut() {
+        print("Cutting RemotegreekPizza pizza")
+    }
+
+    func box() {
+        print("Packaging RemotegreekPizza pizza")
+    } 
+}
+
+class RemotePepperoniPizza: Pizza {
+    func prepare() {
+        print("Preparing RemotePepperoniPizza pizza")
+    }
+
+    func bake() {
+        print("Baking RemotePepperoniPizza pizza")
+    }
+
+    func cut() {
+        print("Cutting RemotePepperoniPizza pizza")
+    }
+
+    func box() {
+        print("Packaging RemotePepperoniPizza pizza")
     }
 }
 //Pizza End:------------------------------------
-
+protocol PizzaFactory {
+    func makePizza(type: PizzaType) -> Pizza 
+}
 //Pizza Factory: -------------------------------
-class PizzaFactory {
+class LocalPizzaFactory: PizzaFactory {
     func makePizza(type: PizzaType) -> Pizza {
        switch type {
         case .cheesePizza:
-            return CheesePizza()
+            return LocalCheesePizza()
         case .greekPizza:
-            return GreekPizza()
+            return LocalGreekPizza()
         case .pepperoni:
-            return PepperoniPizza()
+            return LocalPepperoniPizza()
+        } 
+    }
+}
+
+class RemotePizzaFactory: PizzaFactory {
+    func makePizza(type: PizzaType) -> Pizza {
+       switch type {
+        case .cheesePizza:
+            return RemoteCheesePizza()
+        case .greekPizza:
+            return RemoteGreekPizza()
+        case .pepperoni:
+            return RemotePepperoniPizza()
         } 
     }
 }
 //End of factory:-------------------------------
-
+enum PizzaFlavour {
+    case local, remote
+}
 //Now use that factory to any place where you need a pizza to make.
-func orderPizza(type: PizzaType) -> Pizza{
-    let factory = PizzaFactory()
+func orderPizza(type: PizzaType, flavour: PizzaFlavour) -> Pizza{
+    switch flavour {
+    case .local:
+        let factory = LocalPizzaFactory()
+        let pizza = factory.makePizza(type: type)
+        pizza.prepare()
+        pizza.bake()
+        pizza.cut()
+        pizza.box()
+    return pizza 
+    case .remote:
+        let factory = RemotePizzaFactory()
     let pizza = factory.makePizza(type: type)
     pizza.prepare()
     pizza.bake()
     pizza.cut()
     pizza.box()
     return pizza
+    }
+    
 }
-print("\nI want Cheese Pizza:")
-let cheesePizza = orderPizza(type: .cheesePizza)
-print("Here is your Pizza: \(cheesePizza)")
+print("\nI want Local Cheese Pizza:")
+let localCheesePizza = orderPizza(type: .cheesePizza, flavour: .local)
+print("Here is your Pizza: \(localCheesePizza)")
 
-print("\nI want Greek Pizza:")
-let greekPizza = orderPizza(type: .greekPizza)
-print("Here is your Pizza: \(greekPizza)")
+print("\nI want Remote Greek Pizza:")
+let remoteGreekPizza = orderPizza(type: .greekPizza, flavour: .remote)
+print("Here is your Pizza: \(remoteGreekPizza)")
