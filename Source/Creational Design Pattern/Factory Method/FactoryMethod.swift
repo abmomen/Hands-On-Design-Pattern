@@ -65,11 +65,7 @@ class PepperoniPizza: Pizza {
 //Pizza End:------------------------------------
 
 //Pizza Factory: -------------------------------
-protocol PizzaFactory {
-    func makePizza(type: PizzaType) -> Pizza 
-}
-
-class MainFactory: PizzaFactory {
+class PizzaFactory {
     func makePizza(type: PizzaType) -> Pizza {
        switch type {
         case .cheesePizza:
@@ -85,7 +81,7 @@ class MainFactory: PizzaFactory {
 
 //Now use that factory to any place where you need a pizza to make.
 func orderPizza(type: PizzaType) -> Pizza{
-    let factory = MainFactory()
+    let factory = PizzaFactory()
     let pizza = factory.makePizza(type: type)
     pizza.prepare()
     pizza.bake()
